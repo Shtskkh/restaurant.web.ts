@@ -37,8 +37,9 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     data.append("login", login);
     data.append("password", password);
     try {
-      const response = (await axios.postForm("/api/auth/login", data))
-        .data as SuccessResponse;
+      const response = (
+        await axios.postForm<SuccessResponse>("/api/auth/login", data)
+      ).data;
       onSuccess(login, response.access_token);
     } catch {
       setHidden("flex");
