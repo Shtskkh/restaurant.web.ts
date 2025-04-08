@@ -1,5 +1,5 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const Route = createFileRoute("/_auth/dashboard")({
   head: () => ({
@@ -11,8 +11,15 @@ export const Route = createFileRoute("/_auth/dashboard")({
 function DashboardPage() {
   return (
     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-      <h1>Сводка</h1>
-      <p>Здесь может быть ваш контент.</p>
+      <Typography
+        variant="h4"
+        color="textPrimary"
+        mt={3}
+        mb={3}
+        sx={{ fontWeight: "bold" }}
+      >
+        Сводка
+      </Typography>
     </Box>
   );
 }
