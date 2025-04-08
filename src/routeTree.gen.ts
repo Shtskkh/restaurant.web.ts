@@ -14,7 +14,10 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthProfileImport } from './routes/_auth.profile'
 import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
+import { Route as AuthStaffIndexImport } from './routes/_auth.staff.index'
+import { Route as AuthStaffIdImport } from './routes/_auth.staff.$id'
 
 // Create/Update Routes
 
@@ -35,9 +38,27 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthProfileRoute = AuthProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthDashboardRoute = AuthDashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthStaffIndexRoute = AuthStaffIndexImport.update({
+  id: '/staff/',
+  path: '/staff/',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthStaffIdRoute = AuthStaffIdImport.update({
+  id: '/staff/$id',
+  path: '/staff/$id',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -73,6 +94,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthDashboardImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/profile': {
+      id: '/_auth/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthProfileImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/staff/$id': {
+      id: '/_auth/staff/$id'
+      path: '/staff/$id'
+      fullPath: '/staff/$id'
+      preLoaderRoute: typeof AuthStaffIdImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/staff/': {
+      id: '/_auth/staff/'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof AuthStaffIndexImport
+      parentRoute: typeof AuthImport
+    }
   }
 }
 
@@ -80,10 +122,16 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRoute
+  AuthProfileRoute: typeof AuthProfileRoute
+  AuthStaffIdRoute: typeof AuthStaffIdRoute
+  AuthStaffIndexRoute: typeof AuthStaffIndexRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRoute,
+  AuthProfileRoute: AuthProfileRoute,
+  AuthStaffIdRoute: AuthStaffIdRoute,
+  AuthStaffIndexRoute: AuthStaffIndexRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -93,6 +141,9 @@ export interface FileRoutesByFullPath {
   '': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRoute
+  '/profile': typeof AuthProfileRoute
+  '/staff/$id': typeof AuthStaffIdRoute
+  '/staff': typeof AuthStaffIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -100,6 +151,9 @@ export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRoute
+  '/profile': typeof AuthProfileRoute
+  '/staff/$id': typeof AuthStaffIdRoute
+  '/staff': typeof AuthStaffIndexRoute
 }
 
 export interface FileRoutesById {
@@ -108,14 +162,32 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
+  '/_auth/profile': typeof AuthProfileRoute
+  '/_auth/staff/$id': typeof AuthStaffIdRoute
+  '/_auth/staff/': typeof AuthStaffIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/login' | '/dashboard'
+  fullPaths:
+    | '/'
+    | ''
+    | '/login'
+    | '/dashboard'
+    | '/profile'
+    | '/staff/$id'
+    | '/staff'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/dashboard'
-  id: '__root__' | '/' | '/_auth' | '/login' | '/_auth/dashboard'
+  to: '/' | '' | '/login' | '/dashboard' | '/profile' | '/staff/$id' | '/staff'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/login'
+    | '/_auth/dashboard'
+    | '/_auth/profile'
+    | '/_auth/staff/$id'
+    | '/_auth/staff/'
   fileRoutesById: FileRoutesById
 }
 
@@ -152,7 +224,10 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/dashboard"
+        "/_auth/dashboard",
+        "/_auth/profile",
+        "/_auth/staff/$id",
+        "/_auth/staff/"
       ]
     },
     "/login": {
@@ -160,6 +235,18 @@ export const routeTree = rootRoute
     },
     "/_auth/dashboard": {
       "filePath": "_auth.dashboard.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/profile": {
+      "filePath": "_auth.profile.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/staff/$id": {
+      "filePath": "_auth.staff.$id.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/staff/": {
+      "filePath": "_auth.staff.index.tsx",
       "parent": "/_auth"
     }
   }
