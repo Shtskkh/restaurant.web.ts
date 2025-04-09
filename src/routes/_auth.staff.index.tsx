@@ -63,6 +63,25 @@ function StaffPage() {
     navigate({ to: "/staff/$id", params: { id } }).then();
   };
 
+  if (users === undefined) {
+    return (
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Typography
+          variant="h4"
+          color="textPrimary"
+          mt={3}
+          mb={3}
+          sx={{ fontWeight: "bold" }}
+        >
+          Сотрудники
+        </Typography>
+        <Typography variant="body1" color="textPrimary" mt={3} mb={3}>
+          Не удалось загрузить сотрудников.
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
       <Typography

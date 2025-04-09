@@ -12,17 +12,22 @@ export const Route = createFileRoute("/_auth/profile")({
 
 function ProfilePage() {
   const user: User = Route.useLoaderData();
-  if (!user) {
+  if (user === undefined) {
     return (
-      <Typography
-        variant="h4"
-        color="textPrimary"
-        mt={3}
-        mb={3}
-        sx={{ fontWeight: "bold" }}
-      >
-        Не удалось загрузить профиль.
-      </Typography>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Typography
+          variant="h4"
+          color="textPrimary"
+          mt={3}
+          mb={3}
+          sx={{ fontWeight: "bold" }}
+        >
+          Профиль
+        </Typography>
+        <Typography variant="body1" color="textPrimary" mt={3} mb={3}>
+          Не удалось загрузить профиль.
+        </Typography>
+      </Box>
     );
   }
   return (
