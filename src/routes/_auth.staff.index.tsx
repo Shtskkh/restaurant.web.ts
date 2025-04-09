@@ -1,22 +1,12 @@
 ﻿import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { fetchStaff, User } from "../utils/utils.ts";
+import { Box, Typography } from "@mui/material";
 import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+  DataGrid,
+  GridColDef,
+  GridEventListener,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { useMemo } from "react";
 
 export const Route = createFileRoute("/_auth/staff/")({
@@ -29,35 +19,49 @@ export const Route = createFileRoute("/_auth/staff/")({
 
 function StaffPage() {
   const users: User[] = Route.useLoaderData();
-  const columns = useMemo<ColumnDef<User>[]>(
+  const navigate = useNavigate();
+  const columns = useMemo<GridColDef<User>[]>(
     () => [
       {
-        header: "ID",
-        accessorKey: "idEmployee",
+        field: "idEmployee",
+        headerName: "ID",
+        flex: 0.25,
       },
       {
-        header: "Фамилия",
-        accessorKey: "lastName",
+        field: "lastName",
+        headerName: "Фамилия",
+        flex: 1,
       },
       {
-        header: "Имя",
-        accessorKey: "firstName",
+        field: "firstName",
+        headerName: "Имя",
+        flex: 1,
       },
       {
-        header: "Отчество",
-        accessorKey: "middleName",
+        field: "middleName",
+        headerName: "Отчество",
+        flex: 1,
       },
       {
-        header: "Должность",
-        accessorKey: "position",
+        field: "position",
+        headerName: "Должность",
+        flex: 1,
       },
       {
-        header: "Номер телефона",
-        accessorKey: "phoneNumber",
+        field: "phoneNumber",
+        headerName: "Номер телефона",
+        flex: 1,
       },
     ],
     [],
   );
+
+  const handleClick: GridEventListener<"rowDoubleClick"> = (
+    gridParams: GridRowParams,
+  ): void => {
+    const id: string = gridParams.row.idEmployee;
+    navigate({ to: "/staff/$id", params: { id } }).then();
+  };
 
   return (
     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
@@ -70,74 +74,14 @@ function StaffPage() {
       >
         Сотрудники
       </Typography>
-      <StaffTable data={users} columns={columns} />
+      <DataGrid
+        columns={columns}
+        rows={users}
+        getRowId={(row) => row.idEmployee}
+        disableColumnMenu={true}
+        onRowDoubleClick={handleClick}
+        hideFooter={true}
+      />
     </Box>
-  );
-}
-
-function StaffTable({
-  data,
-  columns,
-}: {
-  data: User[];
-  columns: ColumnDef<User>[];
-}) {
-  const table = useReactTable<User>({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-  const navigate = useNavigate();
-
-  return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableCell
-                  variant="head"
-                  key={header.id}
-                  colSpan={header.colSpan}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {table.getCoreRowModel().rows.map((row) => {
-            const handleClick = () => {
-              const id = row.original.idEmployee.toString();
-              navigate({ to: `/staff/$id`, params: { id } }).then();
-            };
-            return (
-              <TableRow
-                onClick={handleClick}
-                hover
-                key={row.id}
-                sx={{ cursor: "pointer" }}
-              >
-                {row.getVisibleCells().map((cell) => {
-                  return (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
   );
 }
