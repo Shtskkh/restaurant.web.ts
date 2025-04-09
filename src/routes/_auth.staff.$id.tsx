@@ -5,7 +5,7 @@ import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 export const Route = createFileRoute("/_auth/staff/$id")({
   loader: async ({ params: { id } }) => fetchStaffById(id),
   head: () => ({
-    meta: [{ title: "Профиль" }],
+    meta: [{ title: "Сотрудник" }],
   }),
   component: EmployeePage,
 });
