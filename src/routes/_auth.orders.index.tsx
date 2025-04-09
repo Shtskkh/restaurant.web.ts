@@ -19,22 +19,27 @@ function OrdersPage() {
       {
         field: "idOrder",
         headerName: "ID",
+        flex: 0.25,
       },
       {
         field: "date",
         headerName: "Дата",
+        flex: 1,
       },
       {
         field: "status",
         headerName: "Статус",
+        flex: 1,
       },
       {
         field: "tableNumber",
         headerName: "Столик",
+        flex: 1,
       },
       {
         field: "employee",
         headerName: "Официант",
+        flex: 1,
       },
     ],
     [],
