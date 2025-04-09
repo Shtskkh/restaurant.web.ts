@@ -17,6 +17,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as AuthProfileImport } from './routes/_auth.profile'
 import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
 import { Route as AuthStaffIndexImport } from './routes/_auth.staff.index'
+import { Route as AuthOrdersIndexImport } from './routes/_auth.orders.index'
 import { Route as AuthStaffIdImport } from './routes/_auth.staff.$id'
 
 // Create/Update Routes
@@ -53,6 +54,12 @@ const AuthDashboardRoute = AuthDashboardImport.update({
 const AuthStaffIndexRoute = AuthStaffIndexImport.update({
   id: '/staff/',
   path: '/staff/',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthOrdersIndexRoute = AuthOrdersIndexImport.update({
+  id: '/orders/',
+  path: '/orders/',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -108,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthStaffIdImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/orders/': {
+      id: '/_auth/orders/'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof AuthOrdersIndexImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/staff/': {
       id: '/_auth/staff/'
       path: '/staff'
@@ -124,6 +138,7 @@ interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthProfileRoute: typeof AuthProfileRoute
   AuthStaffIdRoute: typeof AuthStaffIdRoute
+  AuthOrdersIndexRoute: typeof AuthOrdersIndexRoute
   AuthStaffIndexRoute: typeof AuthStaffIndexRoute
 }
 
@@ -131,6 +146,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRoute,
   AuthProfileRoute: AuthProfileRoute,
   AuthStaffIdRoute: AuthStaffIdRoute,
+  AuthOrdersIndexRoute: AuthOrdersIndexRoute,
   AuthStaffIndexRoute: AuthStaffIndexRoute,
 }
 
@@ -143,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthDashboardRoute
   '/profile': typeof AuthProfileRoute
   '/staff/$id': typeof AuthStaffIdRoute
+  '/orders': typeof AuthOrdersIndexRoute
   '/staff': typeof AuthStaffIndexRoute
 }
 
@@ -153,6 +170,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthDashboardRoute
   '/profile': typeof AuthProfileRoute
   '/staff/$id': typeof AuthStaffIdRoute
+  '/orders': typeof AuthOrdersIndexRoute
   '/staff': typeof AuthStaffIndexRoute
 }
 
@@ -164,6 +182,7 @@ export interface FileRoutesById {
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/profile': typeof AuthProfileRoute
   '/_auth/staff/$id': typeof AuthStaffIdRoute
+  '/_auth/orders/': typeof AuthOrdersIndexRoute
   '/_auth/staff/': typeof AuthStaffIndexRoute
 }
 
@@ -176,9 +195,18 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/profile'
     | '/staff/$id'
+    | '/orders'
     | '/staff'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/dashboard' | '/profile' | '/staff/$id' | '/staff'
+  to:
+    | '/'
+    | ''
+    | '/login'
+    | '/dashboard'
+    | '/profile'
+    | '/staff/$id'
+    | '/orders'
+    | '/staff'
   id:
     | '__root__'
     | '/'
@@ -187,6 +215,7 @@ export interface FileRouteTypes {
     | '/_auth/dashboard'
     | '/_auth/profile'
     | '/_auth/staff/$id'
+    | '/_auth/orders/'
     | '/_auth/staff/'
   fileRoutesById: FileRoutesById
 }
@@ -227,6 +256,7 @@ export const routeTree = rootRoute
         "/_auth/dashboard",
         "/_auth/profile",
         "/_auth/staff/$id",
+        "/_auth/orders/",
         "/_auth/staff/"
       ]
     },
@@ -243,6 +273,10 @@ export const routeTree = rootRoute
     },
     "/_auth/staff/$id": {
       "filePath": "_auth.staff.$id.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/orders/": {
+      "filePath": "_auth.orders.index.tsx",
       "parent": "/_auth"
     },
     "/_auth/staff/": {
