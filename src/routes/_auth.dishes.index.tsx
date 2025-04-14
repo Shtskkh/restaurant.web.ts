@@ -1,7 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Dish, fetchDishes } from "../utils/utils.ts";
 import { Box, Typography } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridEventListener,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { useMemo } from "react";
 
 export const Route = createFileRoute("/_auth/dishes/")({
@@ -14,7 +19,7 @@ export const Route = createFileRoute("/_auth/dishes/")({
 
 function DishesPage() {
   const dishes: Dish[] = Route.useLoaderData();
-
+  const navigate = useNavigate();
   const columns = useMemo<GridColDef<Dish>[]>(
     () => [
       {
@@ -46,6 +51,13 @@ function DishesPage() {
     ],
     [],
   );
+
+  const handleClick: GridEventListener<"rowDoubleClick"> = (
+    gridParams: GridRowParams,
+  ): void => {
+    const id: string = gridParams.row.idDish;
+    navigate({ to: "/dishes/$id", params: { id } }).then();
+  };
 
   if (dishes === undefined) {
     return (
@@ -83,6 +95,7 @@ function DishesPage() {
         getRowId={(row) => row.idDish}
         disableColumnMenu={true}
         hideFooter={true}
+        onRowDoubleClick={handleClick}
       />
     </Box>
   );
