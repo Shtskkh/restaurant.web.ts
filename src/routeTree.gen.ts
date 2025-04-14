@@ -21,6 +21,7 @@ import { Route as AuthOrdersIndexImport } from './routes/_auth.orders.index'
 import { Route as AuthDishesIndexImport } from './routes/_auth.dishes.index'
 import { Route as AuthStaffIdImport } from './routes/_auth.staff.$id'
 import { Route as AuthOrdersIdImport } from './routes/_auth.orders.$id'
+import { Route as AuthDishesIdImport } from './routes/_auth.dishes.$id'
 
 // Create/Update Routes
 
@@ -83,6 +84,12 @@ const AuthOrdersIdRoute = AuthOrdersIdImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthDishesIdRoute = AuthDishesIdImport.update({
+  id: '/dishes/$id',
+  path: '/dishes/$id',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -120,6 +127,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthProfileImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/dishes/$id': {
+      id: '/_auth/dishes/$id'
+      path: '/dishes/$id'
+      fullPath: '/dishes/$id'
+      preLoaderRoute: typeof AuthDishesIdImport
       parentRoute: typeof AuthImport
     }
     '/_auth/orders/$id': {
@@ -165,6 +179,7 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthProfileRoute: typeof AuthProfileRoute
+  AuthDishesIdRoute: typeof AuthDishesIdRoute
   AuthOrdersIdRoute: typeof AuthOrdersIdRoute
   AuthStaffIdRoute: typeof AuthStaffIdRoute
   AuthDishesIndexRoute: typeof AuthDishesIndexRoute
@@ -175,6 +190,7 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRoute,
   AuthProfileRoute: AuthProfileRoute,
+  AuthDishesIdRoute: AuthDishesIdRoute,
   AuthOrdersIdRoute: AuthOrdersIdRoute,
   AuthStaffIdRoute: AuthStaffIdRoute,
   AuthDishesIndexRoute: AuthDishesIndexRoute,
@@ -190,6 +206,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRoute
   '/profile': typeof AuthProfileRoute
+  '/dishes/$id': typeof AuthDishesIdRoute
   '/orders/$id': typeof AuthOrdersIdRoute
   '/staff/$id': typeof AuthStaffIdRoute
   '/dishes': typeof AuthDishesIndexRoute
@@ -203,6 +220,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRoute
   '/profile': typeof AuthProfileRoute
+  '/dishes/$id': typeof AuthDishesIdRoute
   '/orders/$id': typeof AuthOrdersIdRoute
   '/staff/$id': typeof AuthStaffIdRoute
   '/dishes': typeof AuthDishesIndexRoute
@@ -217,6 +235,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/profile': typeof AuthProfileRoute
+  '/_auth/dishes/$id': typeof AuthDishesIdRoute
   '/_auth/orders/$id': typeof AuthOrdersIdRoute
   '/_auth/staff/$id': typeof AuthStaffIdRoute
   '/_auth/dishes/': typeof AuthDishesIndexRoute
@@ -232,6 +251,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/dashboard'
     | '/profile'
+    | '/dishes/$id'
     | '/orders/$id'
     | '/staff/$id'
     | '/dishes'
@@ -244,6 +264,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/dashboard'
     | '/profile'
+    | '/dishes/$id'
     | '/orders/$id'
     | '/staff/$id'
     | '/dishes'
@@ -256,6 +277,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/_auth/dashboard'
     | '/_auth/profile'
+    | '/_auth/dishes/$id'
     | '/_auth/orders/$id'
     | '/_auth/staff/$id'
     | '/_auth/dishes/'
@@ -299,6 +321,7 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/dashboard",
         "/_auth/profile",
+        "/_auth/dishes/$id",
         "/_auth/orders/$id",
         "/_auth/staff/$id",
         "/_auth/dishes/",
@@ -315,6 +338,10 @@ export const routeTree = rootRoute
     },
     "/_auth/profile": {
       "filePath": "_auth.profile.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/dishes/$id": {
+      "filePath": "_auth.dishes.$id.tsx",
       "parent": "/_auth"
     },
     "/_auth/orders/$id": {
