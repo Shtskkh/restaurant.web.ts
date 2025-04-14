@@ -18,6 +18,7 @@ import { Route as AuthProfileImport } from './routes/_auth.profile'
 import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
 import { Route as AuthStaffIndexImport } from './routes/_auth.staff.index'
 import { Route as AuthOrdersIndexImport } from './routes/_auth.orders.index'
+import { Route as AuthDishesIndexImport } from './routes/_auth.dishes.index'
 import { Route as AuthStaffIdImport } from './routes/_auth.staff.$id'
 import { Route as AuthOrdersIdImport } from './routes/_auth.orders.$id'
 
@@ -61,6 +62,12 @@ const AuthStaffIndexRoute = AuthStaffIndexImport.update({
 const AuthOrdersIndexRoute = AuthOrdersIndexImport.update({
   id: '/orders/',
   path: '/orders/',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthDishesIndexRoute = AuthDishesIndexImport.update({
+  id: '/dishes/',
+  path: '/dishes/',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -129,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthStaffIdImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/dishes/': {
+      id: '/_auth/dishes/'
+      path: '/dishes'
+      fullPath: '/dishes'
+      preLoaderRoute: typeof AuthDishesIndexImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/orders/': {
       id: '/_auth/orders/'
       path: '/orders'
@@ -153,6 +167,7 @@ interface AuthRouteChildren {
   AuthProfileRoute: typeof AuthProfileRoute
   AuthOrdersIdRoute: typeof AuthOrdersIdRoute
   AuthStaffIdRoute: typeof AuthStaffIdRoute
+  AuthDishesIndexRoute: typeof AuthDishesIndexRoute
   AuthOrdersIndexRoute: typeof AuthOrdersIndexRoute
   AuthStaffIndexRoute: typeof AuthStaffIndexRoute
 }
@@ -162,6 +177,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthProfileRoute: AuthProfileRoute,
   AuthOrdersIdRoute: AuthOrdersIdRoute,
   AuthStaffIdRoute: AuthStaffIdRoute,
+  AuthDishesIndexRoute: AuthDishesIndexRoute,
   AuthOrdersIndexRoute: AuthOrdersIndexRoute,
   AuthStaffIndexRoute: AuthStaffIndexRoute,
 }
@@ -176,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthProfileRoute
   '/orders/$id': typeof AuthOrdersIdRoute
   '/staff/$id': typeof AuthStaffIdRoute
+  '/dishes': typeof AuthDishesIndexRoute
   '/orders': typeof AuthOrdersIndexRoute
   '/staff': typeof AuthStaffIndexRoute
 }
@@ -188,6 +205,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthProfileRoute
   '/orders/$id': typeof AuthOrdersIdRoute
   '/staff/$id': typeof AuthStaffIdRoute
+  '/dishes': typeof AuthDishesIndexRoute
   '/orders': typeof AuthOrdersIndexRoute
   '/staff': typeof AuthStaffIndexRoute
 }
@@ -201,6 +219,7 @@ export interface FileRoutesById {
   '/_auth/profile': typeof AuthProfileRoute
   '/_auth/orders/$id': typeof AuthOrdersIdRoute
   '/_auth/staff/$id': typeof AuthStaffIdRoute
+  '/_auth/dishes/': typeof AuthDishesIndexRoute
   '/_auth/orders/': typeof AuthOrdersIndexRoute
   '/_auth/staff/': typeof AuthStaffIndexRoute
 }
@@ -215,6 +234,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/orders/$id'
     | '/staff/$id'
+    | '/dishes'
     | '/orders'
     | '/staff'
   fileRoutesByTo: FileRoutesByTo
@@ -226,6 +246,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/orders/$id'
     | '/staff/$id'
+    | '/dishes'
     | '/orders'
     | '/staff'
   id:
@@ -237,6 +258,7 @@ export interface FileRouteTypes {
     | '/_auth/profile'
     | '/_auth/orders/$id'
     | '/_auth/staff/$id'
+    | '/_auth/dishes/'
     | '/_auth/orders/'
     | '/_auth/staff/'
   fileRoutesById: FileRoutesById
@@ -279,6 +301,7 @@ export const routeTree = rootRoute
         "/_auth/profile",
         "/_auth/orders/$id",
         "/_auth/staff/$id",
+        "/_auth/dishes/",
         "/_auth/orders/",
         "/_auth/staff/"
       ]
@@ -300,6 +323,10 @@ export const routeTree = rootRoute
     },
     "/_auth/staff/$id": {
       "filePath": "_auth.staff.$id.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/dishes/": {
+      "filePath": "_auth.dishes.index.tsx",
       "parent": "/_auth"
     },
     "/_auth/orders/": {
