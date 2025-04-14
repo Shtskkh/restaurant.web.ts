@@ -19,6 +19,7 @@ import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
 import { Route as AuthStaffIndexImport } from './routes/_auth.staff.index'
 import { Route as AuthOrdersIndexImport } from './routes/_auth.orders.index'
 import { Route as AuthStaffIdImport } from './routes/_auth.staff.$id'
+import { Route as AuthOrdersIdImport } from './routes/_auth.orders.$id'
 
 // Create/Update Routes
 
@@ -69,6 +70,12 @@ const AuthStaffIdRoute = AuthStaffIdImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AuthOrdersIdRoute = AuthOrdersIdImport.update({
+  id: '/orders/$id',
+  path: '/orders/$id',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -108,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthProfileImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/orders/$id': {
+      id: '/_auth/orders/$id'
+      path: '/orders/$id'
+      fullPath: '/orders/$id'
+      preLoaderRoute: typeof AuthOrdersIdImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/staff/$id': {
       id: '/_auth/staff/$id'
       path: '/staff/$id'
@@ -137,6 +151,7 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthProfileRoute: typeof AuthProfileRoute
+  AuthOrdersIdRoute: typeof AuthOrdersIdRoute
   AuthStaffIdRoute: typeof AuthStaffIdRoute
   AuthOrdersIndexRoute: typeof AuthOrdersIndexRoute
   AuthStaffIndexRoute: typeof AuthStaffIndexRoute
@@ -145,6 +160,7 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRoute,
   AuthProfileRoute: AuthProfileRoute,
+  AuthOrdersIdRoute: AuthOrdersIdRoute,
   AuthStaffIdRoute: AuthStaffIdRoute,
   AuthOrdersIndexRoute: AuthOrdersIndexRoute,
   AuthStaffIndexRoute: AuthStaffIndexRoute,
@@ -158,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRoute
   '/profile': typeof AuthProfileRoute
+  '/orders/$id': typeof AuthOrdersIdRoute
   '/staff/$id': typeof AuthStaffIdRoute
   '/orders': typeof AuthOrdersIndexRoute
   '/staff': typeof AuthStaffIndexRoute
@@ -169,6 +186,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRoute
   '/profile': typeof AuthProfileRoute
+  '/orders/$id': typeof AuthOrdersIdRoute
   '/staff/$id': typeof AuthStaffIdRoute
   '/orders': typeof AuthOrdersIndexRoute
   '/staff': typeof AuthStaffIndexRoute
@@ -181,6 +199,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/profile': typeof AuthProfileRoute
+  '/_auth/orders/$id': typeof AuthOrdersIdRoute
   '/_auth/staff/$id': typeof AuthStaffIdRoute
   '/_auth/orders/': typeof AuthOrdersIndexRoute
   '/_auth/staff/': typeof AuthStaffIndexRoute
@@ -194,6 +213,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/dashboard'
     | '/profile'
+    | '/orders/$id'
     | '/staff/$id'
     | '/orders'
     | '/staff'
@@ -204,6 +224,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/dashboard'
     | '/profile'
+    | '/orders/$id'
     | '/staff/$id'
     | '/orders'
     | '/staff'
@@ -214,6 +235,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/_auth/dashboard'
     | '/_auth/profile'
+    | '/_auth/orders/$id'
     | '/_auth/staff/$id'
     | '/_auth/orders/'
     | '/_auth/staff/'
@@ -255,6 +277,7 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/dashboard",
         "/_auth/profile",
+        "/_auth/orders/$id",
         "/_auth/staff/$id",
         "/_auth/orders/",
         "/_auth/staff/"
@@ -269,6 +292,10 @@ export const routeTree = rootRoute
     },
     "/_auth/profile": {
       "filePath": "_auth.profile.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/orders/$id": {
+      "filePath": "_auth.orders.$id.tsx",
       "parent": "/_auth"
     },
     "/_auth/staff/$id": {
