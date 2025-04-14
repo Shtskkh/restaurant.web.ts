@@ -1,7 +1,12 @@
-﻿import { createFileRoute } from "@tanstack/react-router";
+﻿import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { fetchOrders, Order } from "../utils/utils.ts";
 import { Box, Typography } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridEventListener,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { useMemo } from "react";
 
 export const Route = createFileRoute("/_auth/orders/")({
@@ -14,6 +19,7 @@ export const Route = createFileRoute("/_auth/orders/")({
 
 function OrdersPage() {
   const orders: Order[] = Route.useLoaderData();
+  const navigate = useNavigate();
   const columns = useMemo<GridColDef<Order>[]>(
     () => [
       {
@@ -44,6 +50,13 @@ function OrdersPage() {
     ],
     [],
   );
+
+  const handleClick: GridEventListener<"rowDoubleClick"> = (
+    gridParams: GridRowParams,
+  ): void => {
+    const id: string = gridParams.row.idOrder;
+    navigate({ to: "/orders/$id", params: { id } }).then();
+  };
 
   if (orders === undefined) {
     return (
@@ -81,6 +94,7 @@ function OrdersPage() {
         getRowId={(row) => row.idOrder}
         disableColumnMenu={true}
         hideFooter={true}
+        onRowDoubleClick={handleClick}
       />
     </Box>
   );
