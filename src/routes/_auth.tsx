@@ -3,7 +3,7 @@ import { Sidebar } from "../components/Sidebar";
 import { Box } from "@mui/material";
 
 export const Route = createFileRoute("/_auth")({
-  beforeLoad: async ({ context, location }) => {
+  beforeLoad: ({ context, location }) => {
     if (!context.auth.isAuthenticated) {
       throw redirect({
         to: "/login",
