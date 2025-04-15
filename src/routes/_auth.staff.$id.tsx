@@ -1,5 +1,5 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { fetchStaffById, User } from "../utils/utils.ts";
+import { Employee, fetchStaffById } from "../utils/utils.ts";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 
 export const Route = createFileRoute("/_auth/staff/$id")({
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_auth/staff/$id")({
 });
 
 function EmployeePage() {
-  const user: User = Route.useLoaderData();
+  const user: Employee = Route.useLoaderData();
   if (!user) {
     return (
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

@@ -1,5 +1,5 @@
 ﻿import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { fetchStaff, User } from "../utils/utils.ts";
+import { Employee, fetchStaff } from "../utils/utils.ts";
 import { Box, Typography } from "@mui/material";
 import {
   DataGrid,
@@ -18,9 +18,9 @@ export const Route = createFileRoute("/_auth/staff/")({
 });
 
 function StaffPage() {
-  const users: User[] = Route.useLoaderData();
+  const users: Employee[] = Route.useLoaderData();
   const navigate = useNavigate();
-  const columns = useMemo<GridColDef<User>[]>(
+  const columns = useMemo<GridColDef<Employee>[]>(
     () => [
       {
         field: "idEmployee",

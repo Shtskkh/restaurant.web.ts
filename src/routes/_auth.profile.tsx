@@ -1,6 +1,6 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { fetchProfile, User } from "../utils/utils.ts";
+import { Employee, fetchProfile } from "../utils/utils.ts";
 
 export const Route = createFileRoute("/_auth/profile")({
   loader: async ({ context }) => await fetchProfile(context.auth.login),
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_auth/profile")({
 });
 
 function ProfilePage() {
-  const user: User = Route.useLoaderData();
+  const user: Employee = Route.useLoaderData();
   if (user === undefined) {
     return (
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

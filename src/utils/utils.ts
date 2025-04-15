@@ -1,6 +1,6 @@
 ﻿import axios from "axios";
 
-export type User = {
+export type Employee = {
   idEmployee: number;
   idPosition: number;
   position: string;
@@ -39,25 +39,27 @@ export type Dish = {
 
 export const fetchProfile = async (
   login: string,
-): Promise<User | undefined> => {
+): Promise<Employee | undefined> => {
   try {
-    return (await axios.get<User>(`/api/staff/${login}`)).data;
+    return (await axios.get<Employee>(`/api/staff/${login}`)).data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const fetchStaff = async (): Promise<User[] | undefined> => {
+export const fetchStaff = async (): Promise<Employee[] | undefined> => {
   try {
-    return (await axios.get<User[]>(`/api/staff`)).data;
+    return (await axios.get<Employee[]>(`/api/staff`)).data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const fetchStaffById = async (id: string): Promise<User | undefined> => {
+export const fetchStaffById = async (
+  id: string,
+): Promise<Employee | undefined> => {
   try {
-    return (await axios.get<User>(`/api/staff/${id}`)).data;
+    return (await axios.get<Employee>(`/api/staff/${id}`)).data;
   } catch (error) {
     console.error(error);
   }
