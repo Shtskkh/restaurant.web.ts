@@ -16,7 +16,7 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { ReactNode } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { auth } from "../contexts/auth.tsx";
+import { authStore } from "../contexts/auth.ts";
 
 type ListItemLinkProps = {
   to: string;
@@ -46,9 +46,9 @@ const tabs: ListItemLinkProps[] = [
 
 export const Sidebar = () => {
   const navigate = useNavigate();
-
+  const { clear } = authStore();
   const handeLogOut = () => {
-    auth.signOut();
+    clear();
     navigate({ to: "/login" }).then();
   };
 

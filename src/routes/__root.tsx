@@ -3,10 +3,10 @@
   HeadContent,
   Outlet,
 } from "@tanstack/react-router";
-import { Auth } from "../contexts/auth.tsx";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { AuthStore } from "../contexts/auth.ts";
 
-export const Route = createRootRouteWithContext<{ auth: Auth }>()({
+export const Route = createRootRouteWithContext<{ auth: AuthStore }>()({
   component: () => (
     <>
       <HeadContent />

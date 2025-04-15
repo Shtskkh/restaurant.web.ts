@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: async ({ context, location }) => {
-    if (context.auth.status === "loggedOut") {
+    if (!context.auth.isAuthenticated) {
       throw redirect({
         to: "/login",
         search: {

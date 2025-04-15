@@ -11,11 +11,11 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const auth = Route.useRouteContext({
-    select: ({ auth }) => auth,
-  });
+  const { auth } = Route.useRouteContext();
   const onSuccess = (login: string, access_token: string): void => {
-    auth.signIn(login, access_token);
+    auth.setUsername(login);
+    auth.setAccessToken(access_token);
+    auth.setIsAuthenticated(true);
     navigate({ to: "/dashboard", replace: true }).then();
   };
   return (

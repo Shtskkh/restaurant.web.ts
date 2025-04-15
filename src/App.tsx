@@ -1,7 +1,7 @@
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { CssBaseline } from "@mui/material";
 import { routeTree } from "./routeTree.gen.ts";
-import { auth } from "./contexts/auth.tsx";
+import { authStore } from "./contexts/auth.ts";
 
 const router = createRouter({ routeTree, context: { auth: undefined! } });
 
@@ -13,6 +13,7 @@ declare module "@tanstack/react-router" {
 }
 
 function App() {
+  const auth = authStore.getState();
   return (
     <>
       <CssBaseline />

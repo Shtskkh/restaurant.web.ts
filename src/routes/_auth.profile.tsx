@@ -3,7 +3,11 @@ import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Employee, fetchProfile } from "../utils/utils.ts";
 
 export const Route = createFileRoute("/_auth/profile")({
-  loader: async ({ context }) => await fetchProfile(context.auth.login),
+  loader: async ({ context }) => {
+    if (context.auth.username !== undefined) {
+      return await fetchProfile(context.auth.username);
+    }
+  },
   head: () => ({
     meta: [{ title: "Профиль" }],
   }),
