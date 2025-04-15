@@ -13,7 +13,7 @@ declare module "@tanstack/react-router" {
 }
 
 function App() {
-  const auth = authStore.getState();
+  const auth = authStore();
   return (
     <>
       <CssBaseline />
