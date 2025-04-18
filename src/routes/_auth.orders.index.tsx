@@ -1,13 +1,8 @@
 ﻿import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { fetchOrders, Order } from "../utils/utils.ts";
 import { Box, Typography } from "@mui/material";
-import {
-  DataGrid,
-  GridColDef,
-  GridEventListener,
-  GridRowParams,
-} from "@mui/x-data-grid";
-import { useMemo } from "react";
+import { DataGrid, GridEventListener, GridRowParams } from "@mui/x-data-grid";
+import { ordersColumns } from "../utils/columns.ts";
 
 export const Route = createFileRoute("/_auth/orders/")({
   loader: async () => await fetchOrders(),
@@ -20,36 +15,7 @@ export const Route = createFileRoute("/_auth/orders/")({
 function OrdersPage() {
   const orders: Order[] = Route.useLoaderData();
   const navigate = useNavigate();
-  const columns = useMemo<GridColDef<Order>[]>(
-    () => [
-      {
-        field: "idOrder",
-        headerName: "ID",
-        flex: 0.25,
-      },
-      {
-        field: "date",
-        headerName: "Дата",
-        flex: 1,
-      },
-      {
-        field: "status",
-        headerName: "Статус",
-        flex: 1,
-      },
-      {
-        field: "tableNumber",
-        headerName: "Столик",
-        flex: 1,
-      },
-      {
-        field: "employee",
-        headerName: "Официант",
-        flex: 1,
-      },
-    ],
-    [],
-  );
+  const columns = ordersColumns;
 
   const handleClick: GridEventListener<"rowDoubleClick"> = (
     gridParams: GridRowParams,

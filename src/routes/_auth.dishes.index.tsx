@@ -1,13 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Dish, fetchDishes } from "../utils/utils.ts";
 import { Box, Typography } from "@mui/material";
-import {
-  DataGrid,
-  GridColDef,
-  GridEventListener,
-  GridRowParams,
-} from "@mui/x-data-grid";
-import { useMemo } from "react";
+import { DataGrid, GridEventListener, GridRowParams } from "@mui/x-data-grid";
+import { dishesColumns } from "../utils/columns.ts";
 
 export const Route = createFileRoute("/_auth/dishes/")({
   loader: async () => await fetchDishes(),
@@ -20,37 +15,7 @@ export const Route = createFileRoute("/_auth/dishes/")({
 function DishesPage() {
   const dishes: Dish[] = Route.useLoaderData();
   const navigate = useNavigate();
-  const columns = useMemo<GridColDef<Dish>[]>(
-    () => [
-      {
-        field: "title",
-        headerName: "Название",
-        flex: 1,
-      },
-      {
-        field: "cost",
-        headerName: "Стоимость",
-        flex: 1,
-      },
-      {
-        field: "weightVolume",
-        headerName: "Вес (объём)",
-        flex: 1,
-        valueFormatter: (_value: never, row: Dish) => {
-          return `${row.weightVolume} ${row.unit}`;
-        },
-      },
-      {
-        field: "availability",
-        headerName: "Доступен",
-        flex: 1,
-        valueFormatter: (value) => {
-          return value == true ? "Да" : "Нет";
-        },
-      },
-    ],
-    [],
-  );
+  const columns = dishesColumns;
 
   const handleClick: GridEventListener<"rowDoubleClick"> = (
     gridParams: GridRowParams,

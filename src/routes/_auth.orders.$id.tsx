@@ -1,8 +1,8 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
 import { DishInOrder, fetchOrder, Order } from "../utils/utils.ts";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { useMemo } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
+import { dishesInOrderColumns } from "../utils/columns.ts";
 
 export const Route = createFileRoute("/_auth/orders/$id")({
   loader: async ({ params: { id } }) => fetchOrder(id),
@@ -15,36 +15,7 @@ export const Route = createFileRoute("/_auth/orders/$id")({
 function OrderPage() {
   const order: Order = Route.useLoaderData();
   const dishes: DishInOrder[] = order.dishesInOrder;
-  const columns = useMemo<GridColDef<DishInOrder>[]>(
-    () => [
-      {
-        field: "title",
-        headerName: "Блюдо",
-        flex: 1,
-      },
-      {
-        field: "count",
-        headerName: "Количество",
-        flex: 1,
-      },
-      {
-        field: "comment",
-        headerName: "Комментарий",
-        flex: 1,
-      },
-      {
-        field: "status",
-        headerName: "Статус",
-        flex: 1,
-      },
-      {
-        field: "totalCost",
-        headerName: "Сумма",
-        flex: 1,
-      },
-    ],
-    [],
-  );
+  const columns = dishesInOrderColumns;
 
   if (order === undefined) {
     return (
