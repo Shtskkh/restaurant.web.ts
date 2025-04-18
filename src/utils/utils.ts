@@ -1,41 +1,10 @@
 ﻿import axios from "axios";
+import { components } from "./schema";
 
-export type Employee = {
-  idEmployee: number;
-  idPosition: number;
-  position: string;
-  lastName: string;
-  firstName: string;
-  middleName?: string;
-  phoneNumber: string;
-};
-
-export type DishInOrder = {
-  idDish: number;
-  title: string;
-  count: number;
-  comment?: string;
-  status: string;
-  totalCost: number;
-};
-
-export type Order = {
-  idOrder: number;
-  date: string;
-  tableNumber: number;
-  status: string;
-  employee: string;
-  dishesInOrder: DishInOrder[];
-};
-
-export type Dish = {
-  idDish: number;
-  title: string;
-  cost: number;
-  availability: boolean;
-  weightVolume: number;
-  unit: string;
-};
+export type Employee = components["schemas"]["StaffModel"];
+export type Dish = components["schemas"]["DishModel"];
+export type DishInOrder = components["schemas"]["DishInOrderModel"];
+export type Order = components["schemas"]["OrderModel"];
 
 export const fetchProfile = async (
   login: string,
