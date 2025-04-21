@@ -1,8 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Dish, fetchDishes } from "../utils/utils.ts";
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridEventListener, GridRowParams } from "@mui/x-data-grid";
 import { dishesColumns } from "../utils/columns.ts";
+import { Dish } from "../utils/types.ts";
 
 export const Route = createFileRoute("/_auth/dishes/")({
   loader: async () => await fetchDishes(),

@@ -1,6 +1,6 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { Employee, fetchStaffById } from "../utils/utils.ts";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Employee } from "../utils/types.ts";
 
 export const Route = createFileRoute("/_auth/staff/$id")({
   loader: async ({ params: { id } }) => fetchStaffById(id),

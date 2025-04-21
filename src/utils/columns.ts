@@ -1,5 +1,5 @@
 ﻿import { GridColDef } from "@mui/x-data-grid";
-import { Dish, DishInOrder, Employee, Order } from "./utils.ts";
+import { Dish, DishInOrder, Employee, Order } from "./types.ts";
 
 export const employeeColumns: GridColDef<Employee>[] = [
   {

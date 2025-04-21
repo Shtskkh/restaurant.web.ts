@@ -1,8 +1,8 @@
 ﻿import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Employee, fetchStaff } from "../utils/utils.ts";
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridEventListener, GridRowParams } from "@mui/x-data-grid";
 import { employeeColumns } from "../utils/columns.ts";
+import { Employee } from "../utils/types.ts";
 
 export const Route = createFileRoute("/_auth/staff/")({
   loader: async () => await fetchStaff(),

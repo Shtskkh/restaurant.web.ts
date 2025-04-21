@@ -1,6 +1,6 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { Dish, fetchDish } from "../utils/utils.ts";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Dish } from "../utils/types.ts";
 
 export const Route = createFileRoute("/_auth/dishes/$id")({
   loader: async ({ params: { id } }) => fetchDish(id),

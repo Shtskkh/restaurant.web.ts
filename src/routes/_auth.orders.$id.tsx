@@ -1,8 +1,8 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { DishInOrder, fetchOrder, Order } from "../utils/utils.ts";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { dishesInOrderColumns } from "../utils/columns.ts";
+import { DishInOrder, Order } from "../utils/types.ts";
 
 export const Route = createFileRoute("/_auth/orders/$id")({
   loader: async ({ params: { id } }) => fetchOrder(id),
