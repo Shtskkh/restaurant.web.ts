@@ -26,9 +26,69 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["DishModel"][];
                         "application/json": components["schemas"]["DishModel"][];
-                        "text/json": components["schemas"]["DishModel"][];
+                    };
+                };
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Dishes/GetById/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DishModel"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProblemDetails"];
                     };
                 };
             };
@@ -63,10 +123,15 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["OrderModel"][];
                         "application/json": components["schemas"]["OrderModel"][];
-                        "text/json": components["schemas"]["OrderModel"][];
                     };
+                };
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
                 };
             };
         };
@@ -102,9 +167,25 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["OrderModel"];
                         "application/json": components["schemas"]["OrderModel"];
-                        "text/json": components["schemas"]["OrderModel"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProblemDetails"];
                     };
                 };
             };
@@ -139,10 +220,15 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["StaffModel"][];
                         "application/json": components["schemas"]["StaffModel"][];
-                        "text/json": components["schemas"]["StaffModel"][];
                     };
+                };
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
                 };
             };
         };
@@ -178,87 +264,25 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["StaffModel"];
                         "application/json": components["schemas"]["StaffModel"];
-                        "text/json": components["schemas"]["StaffModel"];
                     };
                 };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/Staff/GetByLogin/{login}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    login: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
+                /** @description Bad Request */
+                400: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["StaffModel"];
-                        "application/json": components["schemas"]["StaffModel"];
-                        "text/json": components["schemas"]["StaffModel"];
+                        "application/json": components["schemas"]["ProblemDetails"];
                     };
                 };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/Staff/Position/{position}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    position: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["StaffModel"];
-                        "application/json": components["schemas"]["StaffModel"];
-                        "text/json": components["schemas"]["StaffModel"];
+                        "application/json": components["schemas"]["ProblemDetails"];
                     };
                 };
             };
@@ -296,6 +320,7 @@ export interface components {
             /** Format: double */
             weightVolume: number;
             unit: string | null;
+            products?: components["schemas"]["ProductInDishModel"][] | null;
         };
         OrderModel: {
             /** Format: int32 */
@@ -306,7 +331,25 @@ export interface components {
             tableNumber: number;
             status: string | null;
             employee: string | null;
-            dishes?: components["schemas"]["DishInOrderModel"][] | null;
+            dishesInOrder?: components["schemas"]["DishInOrderModel"][] | null;
+        };
+        ProblemDetails: {
+            type?: string | null;
+            title?: string | null;
+            /** Format: int32 */
+            status?: number | null;
+            detail?: string | null;
+            instance?: string | null;
+        } & {
+            [key: string]: unknown;
+        };
+        ProductInDishModel: {
+            /** Format: int32 */
+            idProduct: number;
+            title: string | null;
+            /** Format: double */
+            count: number;
+            unit: string | null;
         };
         StaffModel: {
             /** Format: int32 */
